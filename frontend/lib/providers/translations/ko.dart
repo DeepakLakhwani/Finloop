@@ -454,4 +454,20 @@ const Map<String, String> koTranslations = {
   'settings_backup_reminder': "백업 알림",
   'monday': "월요일",
   'sunday': "일요일",
+
+  // Clear Data Strings
+  'clear_data': "데이터 지우기",
+  'clear_app_data_title': "앱 데이터 지우기",
+  'clear_app_data_subtitle': "데이터 재설정 방법을 선택하세요",
+  'clear_transactions_only_title': "거래 내역만 지우기",
+  'clear_transactions_only_desc': "모든 수입, 지출 및 이체 내역을 삭제하고 잔액을 0으로 재설정합니다. 계좌와 예산은 유지됩니다.",
+  'clear_factory_reset_title': "전체 초기화",
+  'clear_factory_reset_desc': "모든 거래, 계좌, 카테고리, 예산 및 메모를 완전히 삭제하고 기본값으로 되돌립니다.",
+  'clear_confirm_title': "정말 진행하시겠습니까?",
+  'clear_confirm_tx_desc': "모든 거래 기록이 영구적으로 삭제되고 잔액이 0으로 설정됩니다. 취소할 수 없습니다.",
+  'clear_confirm_full_desc': "모든 앱 데이터가 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다.",
+  'btn_yes_delete': "예, 삭제합니다",
+  'msg_tx_cleared': "모든 거래 내역이 성공적으로 삭제되었습니다",
+  'msg_data_reset': "모든 앱 데이터가 성공적으로 초기화되었습니다",
+  'msg_clear_failed': "데이터 삭제 실패",
 };

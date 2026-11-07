@@ -454,4 +454,20 @@ const Map<String, String> jaTranslations = {
   'settings_backup_reminder': "バックアップリマインダー",
   'monday': "月曜日",
   'sunday': "日曜日",
+
+  // Clear Data Strings
+  'clear_data': "データを消去",
+  'clear_app_data_title': "アプリデータを消去",
+  'clear_app_data_subtitle': "データのリセット方法を選択してください",
+  'clear_transactions_only_title': "取引履歴のみ消去",
+  'clear_transactions_only_desc': "すべての収入・支出・振替履歴を削除し、残高を0にします。アカウントや予算は保持されます。",
+  'clear_factory_reset_title': "完全な初期化",
+  'clear_factory_reset_desc': "すべての取引、口座、カテゴリ、予算、メモを完全に削除し、初期設定に戻します。",
+  'clear_confirm_title': "本当によろしいですか？",
+  'clear_confirm_tx_desc': "すべての取引記録が完全に削除され、残高がゼロになります。元に戻すことはできません。",
+  'clear_confirm_full_desc': "すべてのアプリデータが完全に削除されます。この操作は取り消せません。",
+  'btn_yes_delete': "はい、削除します",
+  'msg_tx_cleared': "すべての取引が正常に消去されました",
+  'msg_data_reset': "アプリのデータが正常に初期化されました",
+  'msg_clear_failed': "データの消去に失敗しました",
 };

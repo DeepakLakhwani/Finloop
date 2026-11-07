@@ -497,4 +497,20 @@ const Map<String, String> enTranslations = {
   'settings_backup_reminder': "Backup Reminders",
   'monday': "Monday",
   'sunday': "Sunday",
+
+  // Clear Data Strings
+  'clear_data': "Clear Data",
+  'clear_app_data_title': "Clear App Data",
+  'clear_app_data_subtitle': "Choose how you want to reset your data",
+  'clear_transactions_only_title': "Clear Transactions Only",
+  'clear_transactions_only_desc': "Deletes all income, expense & transfer history. Resets account balances to 0. Keeps your custom accounts, categories & budgets.",
+  'clear_factory_reset_title': "Full Factory Reset",
+  'clear_factory_reset_desc': "Permanently erases all transactions, accounts, categories, budgets, and notes. Re-seeds fresh default settings.",
+  'clear_confirm_title': "Are you sure?",
+  'clear_confirm_tx_desc': "This will permanently delete all transaction records and reset account balances to zero. This action cannot be undone.",
+  'clear_confirm_full_desc': "This will permanently erase all app data including transactions, accounts, budgets, categories, and notes. This action cannot be undone.",
+  'btn_yes_delete': "Yes, Delete",
+  'msg_tx_cleared': "All transactions cleared successfully",
+  'msg_data_reset': "All app data reset successfully",
+  'msg_clear_failed': "Failed to clear data",
 };

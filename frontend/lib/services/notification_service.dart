@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService {
@@ -32,8 +33,14 @@ class NotificationService {
   Future<void> initialize() async {
     if (_initialized) return;
 
-    // Initialize timezone database
+    // Initialize timezone database and configure device local timezone
     tz.initializeTimeZones();
+    try {
+      final timezoneInfo = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
+    } catch (_) {
+      // Fallback gracefully if system timezone name is unrecognized
+    }
 
     // Android settings
     const AndroidInitializationSettings androidSettings =

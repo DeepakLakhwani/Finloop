@@ -449,4 +449,20 @@ const Map<String, String> frTranslations = {
   'settings_backup_reminder': "Rappels de sauvegarde",
   'monday': "Lundi",
   'sunday': "Dimanche",
+
+  // Clear Data Strings
+  'clear_data': "Effacer les données",
+  'clear_app_data_title': "Effacer les données de l'application",
+  'clear_app_data_subtitle': "Choisissez comment réinitialiser vos données",
+  'clear_transactions_only_title': "Effacer les transactions uniquement",
+  'clear_transactions_only_desc': "Supprime l'historique des revenus, dépenses et transferts. Réinitialise les soldes à 0. Conserve comptes, catégories et budgets.",
+  'clear_factory_reset_title': "Réinitialisation complète",
+  'clear_factory_reset_desc': "Efface définitivement toutes les transactions, comptes, catégories, budgets et notes. Restaure les paramètres par défaut.",
+  'clear_confirm_title': "Êtes-vous sûr ?",
+  'clear_confirm_tx_desc': "Cela supprimera définitivement tous les enregistrements de transactions et remettra les soldes à zéro. Action irréversible.",
+  'clear_confirm_full_desc': "Cela effacera définitivement toutes les données de l'application. Action irréversible.",
+  'btn_yes_delete': "Oui, supprimer",
+  'msg_tx_cleared': "Toutes les transactions ont été effacées",
+  'msg_data_reset': "Données de l'application réinitialisées",
+  'msg_clear_failed': "Échec de l'effacement des données",
 };

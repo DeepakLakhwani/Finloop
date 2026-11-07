@@ -454,4 +454,20 @@ const Map<String, String> msTranslations = {
   'settings_backup_reminder': "Peringatan sandaran",
   'monday': "Isnin",
   'sunday': "Ahad",
+
+  // Clear Data Strings
+  'clear_data': "Padam Data",
+  'clear_app_data_title': "Padam Data Aplikasi",
+  'clear_app_data_subtitle': "Pilih cara anda ingin menetapkan semula data anda",
+  'clear_transactions_only_title': "Padam Transaksi Sahaja",
+  'clear_transactions_only_desc': "Memadam semua sejarah pendapatan, perbelanjaan & pemindahan. Menetapkan baki ke 0. Mengekalkan akaun dan belanjawan.",
+  'clear_factory_reset_title': "Tetapan Semula Kilang Penuh",
+  'clear_factory_reset_desc': "Memadam semua transaksi, akaun, kategori, belanjawan dan nota secara kekal. Mengembalikan tetapan asal.",
+  'clear_confirm_title': "Adakah anda pasti?",
+  'clear_confirm_tx_desc': "Ini akan memadamkan semua rekod transaksi secara kekal dan menetapkan semula baki kepada sifar. Tindakan ini tidak boleh dibuat asal.",
+  'clear_confirm_full_desc': "Ini akan memadamkan SEMUA data aplikasi secara kekal. Tindakan ini tidak boleh dibuat asal.",
+  'btn_yes_delete': "Ya, Padam",
+  'msg_tx_cleared': "Semua transaksi berjaya dipadamkan",
+  'msg_data_reset': "Semua data aplikasi berjaya ditetapkan semula",
+  'msg_clear_failed': "Gagal memadam data",
 };

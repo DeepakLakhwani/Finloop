@@ -2262,27 +2262,31 @@ class _TransactionsScreenState extends State<TransactionsScreen>
             final isDark =
                 Theme.of(dialogContext).brightness == Brightness.dark;
 
+            final cardBg = isDark ? const Color(0xFF1E201F) : const Color(0xFFF9FAFB);
+            final borderColor = cs.onSurface.withValues(alpha: isDark ? 0.08 : 0.06);
+
             return Dialog(
               backgroundColor: Colors.transparent,
-              insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+              insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Container(
-                padding: const EdgeInsets.all(24),
+                constraints: const BoxConstraints(maxWidth: 420),
+                padding: const EdgeInsets.all(22),
                 decoration: BoxDecoration(
-                  color: cs.surface,
-                  borderRadius: BorderRadius.circular(24),
+                  color: isDark ? const Color(0xFF181A19) : Colors.white,
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: cs.onSurface.withValues(alpha: 0.08),
+                    color: cs.onSurface.withValues(alpha: isDark ? 0.1 : 0.06),
                     width: 1.0,
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(
-                        alpha: isDark ? 0.3 : 0.05,
+                        alpha: isDark ? 0.35 : 0.06,
                       ),
-                      blurRadius: 16,
+                      blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
                   ],
@@ -2291,26 +2295,11 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header Row
+                    // Header Row with Title and Close Button
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: cs.onSurface.withValues(alpha: 0.05),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            localExportFormat == 'csv'
-                                ? Icons.table_chart_rounded
-                                : Icons.picture_as_pdf_rounded,
-                            color: localExportFormat == 'csv'
-                                ? Colors.green
-                                : cs.onSurface.withValues(alpha: 0.7),
-                            size: 22,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -2319,171 +2308,208 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                                 context.translate('title_export_pdf_statement'),
                                 style: TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
                                   color: cs.onSurface,
-                                  letterSpacing: -0.3,
+                                  letterSpacing: -0.2,
                                 ),
                               ),
-                              const SizedBox(height: 2),
+                              const SizedBox(height: 3),
                               Text(
                                 localExportFormat == 'csv'
-                                    ? 'Export your transaction statement to a CSV spreadsheet file.'
+                                    ? 'Export transactions to a CSV spreadsheet.'
                                     : context.translate('desc_export_pdf_statement'),
                                 style: TextStyle(
-                                  fontSize: 11,
+                                  fontSize: 12,
                                   color: cs.onSurface.withValues(alpha: 0.5),
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Divider(
-                      height: 1,
-                      thickness: 0.5,
-                      color: cs.onSurface.withValues(alpha: 0.08),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Export Format Label
-                    Text(
-                      'Export Format',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: cs.onSurface.withValues(alpha: 0.5),
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-
-                    // Export Format Dropdown
-                    DropdownButtonFormField<String>(
-                      initialValue: localExportFormat,
-                      isExpanded: true,
-                      dropdownColor: cs.surface,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: isDark
-                            ? const Color(0xFF161817)
-                            : const Color(0xFFF3F4F6),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(
-                            color: cs.onSurface.withValues(
-                              alpha: isDark ? 0.08 : 0.06,
+                        InkWell(
+                          onTap: () => Navigator.pop(dialogContext),
+                          borderRadius: BorderRadius.circular(20),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Icon(
+                              Icons.close_rounded,
+                              size: 18,
+                              color: cs.onSurface.withValues(alpha: 0.4),
                             ),
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(
-                            color: AppColors.primary.withValues(alpha: 0.5),
-                            width: 1.5,
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
-                      ),
-                      items: [
-                        DropdownMenuItem<String>(
-                          value: 'pdf',
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.picture_as_pdf_rounded,
-                                color: Colors.redAccent,
-                                size: 18,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'PDF Document (.pdf)',
-                                style: TextStyle(
-                                  color: cs.onSurface,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'csv',
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.table_chart_rounded,
-                                color: Colors.green,
-                                size: 18,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'CSV Spreadsheet (.csv)',
-                                style: TextStyle(
-                                  color: cs.onSurface,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
-                      onChanged: (val) {
-                        if (val != null) {
-                          setDialogState(() {
-                            localExportFormat = val;
-                          });
-                        }
-                      },
+                    ),
+                    const SizedBox(height: 18),
+
+                    // Minimal Segmented Format Selector (PDF / CSV)
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: cardBg,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                setDialogState(() {
+                                  localExportFormat = 'pdf';
+                                });
+                              },
+                              borderRadius: BorderRadius.circular(9),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                padding: const EdgeInsets.symmetric(vertical: 9),
+                                decoration: BoxDecoration(
+                                  color: localExportFormat == 'pdf'
+                                      ? (isDark ? const Color(0xFF2C2F2D) : Colors.white)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(9),
+                                  boxShadow: localExportFormat == 'pdf'
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(
+                                              alpha: isDark ? 0.2 : 0.04,
+                                            ),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 1),
+                                          ),
+                                        ]
+                                      : null,
+                                ),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.picture_as_pdf_outlined,
+                                      size: 15,
+                                      color: localExportFormat == 'pdf'
+                                          ? cs.onSurface
+                                          : cs.onSurface.withValues(alpha: 0.45),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      'PDF Statement',
+                                      style: TextStyle(
+                                        fontSize: 12.5,
+                                        fontWeight: localExportFormat == 'pdf'
+                                            ? FontWeight.w600
+                                            : FontWeight.w500,
+                                        color: localExportFormat == 'pdf'
+                                            ? cs.onSurface
+                                            : cs.onSurface.withValues(alpha: 0.5),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                setDialogState(() {
+                                  localExportFormat = 'csv';
+                                });
+                              },
+                              borderRadius: BorderRadius.circular(9),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                padding: const EdgeInsets.symmetric(vertical: 9),
+                                decoration: BoxDecoration(
+                                  color: localExportFormat == 'csv'
+                                      ? (isDark ? const Color(0xFF2C2F2D) : Colors.white)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(9),
+                                  boxShadow: localExportFormat == 'csv'
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(
+                                              alpha: isDark ? 0.2 : 0.04,
+                                            ),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 1),
+                                          ),
+                                        ]
+                                      : null,
+                                ),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.table_chart_outlined,
+                                      size: 15,
+                                      color: localExportFormat == 'csv'
+                                          ? cs.onSurface
+                                          : cs.onSurface.withValues(alpha: 0.45),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      'CSV Spreadsheet',
+                                      style: TextStyle(
+                                        fontSize: 12.5,
+                                        fontWeight: localExportFormat == 'csv'
+                                            ? FontWeight.w600
+                                            : FontWeight.w500,
+                                        color: localExportFormat == 'csv'
+                                            ? cs.onSurface
+                                            : cs.onSurface.withValues(alpha: 0.5),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 16),
 
-                    // Select Account label
+                    // Account Label
                     Text(
                       context.translate('select_account'),
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: cs.onSurface.withValues(alpha: 0.5),
-                        letterSpacing: 0.5,
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: cs.onSurface.withValues(alpha: 0.55),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
 
-                    // Dropdown
+                    // Clean Minimal Account Dropdown
                     DropdownButtonFormField<String?>(
                       initialValue: localSelectedAccountId,
                       isExpanded: true,
-                      dropdownColor: cs.surface,
+                      dropdownColor: isDark ? const Color(0xFF1E201F) : Colors.white,
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 20,
+                        color: cs.onSurface.withValues(alpha: 0.45),
+                      ),
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: isDark
-                            ? const Color(0xFF161817)
-                            : const Color(0xFFF3F4F6),
+                        fillColor: cardBg,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(
-                            color: cs.onSurface.withValues(
-                              alpha: isDark ? 0.08 : 0.06,
-                            ),
-                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: borderColor),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(
-                            color: AppColors.primary.withValues(alpha: 0.5),
-                            width: 1.5,
+                            color: cs.onSurface.withValues(alpha: 0.2),
+                            width: 1.0,
                           ),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
+                          horizontal: 14,
+                          vertical: 12,
                         ),
                       ),
                       items: <DropdownMenuItem<String?>>[
@@ -2493,7 +2519,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                             context.translate('all_accounts'),
                             style: TextStyle(
                               color: cs.onSurface,
-                              fontSize: 14,
+                              fontSize: 13.5,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -2505,7 +2531,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                               acc['name']?.toString() ?? '',
                               style: TextStyle(
                                 color: cs.onSurface,
-                                fontSize: 14,
+                                fontSize: 13.5,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -2518,159 +2544,152 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                         });
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
-                    // Date pickers row
+                    // Date Pickers Label
+                    Text(
+                      'Date Range',
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: cs.onSurface.withValues(alpha: 0.55),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+
+                    // Clean Minimal Date pickers row
                     Row(
                       children: [
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.translate('label_start_date'),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: cs.onSurface.withValues(alpha: 0.5),
-                                  letterSpacing: 0.5,
-                                ),
+                          child: InkWell(
+                            onTap: () async {
+                              final picked = await showDatePicker(
+                                context: dialogContext,
+                                initialDate: localStartDate,
+                                firstDate: DateTime(1970),
+                                lastDate: DateTime(2100),
+                              );
+                              if (picked != null) {
+                                setDialogState(() {
+                                  localStartDate = picked;
+                                });
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 11,
                               ),
-                              const SizedBox(height: 8),
-                              InkWell(
-                                onTap: () async {
-                                  final picked = await showDatePicker(
-                                    context: dialogContext,
-                                    initialDate: localStartDate,
-                                    firstDate: DateTime(1970),
-                                    lastDate: DateTime(2100),
-                                  );
-                                  if (picked != null) {
-                                    setDialogState(() {
-                                      localStartDate = picked;
-                                    });
-                                  }
-                                },
-                                borderRadius: BorderRadius.circular(16),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 14,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: isDark
-                                        ? const Color(0xFF161817)
-                                        : const Color(0xFFF3F4F6),
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: cs.onSurface.withValues(
-                                        alpha: isDark ? 0.08 : 0.06,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                              decoration: BoxDecoration(
+                                color: cardBg,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: borderColor),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        DateFormat(
-                                          'dd/MM/yyyy',
-                                        ).format(localStartDate),
+                                        'FROM',
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.w600,
+                                          color: cs.onSurface.withValues(alpha: 0.4),
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        DateFormat('dd MMM yyyy').format(localStartDate),
+                                        style: TextStyle(
+                                          fontSize: 12.5,
                                           fontWeight: FontWeight.w600,
                                           color: cs.onSurface,
                                         ),
                                       ),
-                                      Icon(
-                                        Icons.calendar_today_rounded,
-                                        size: 16,
-                                        color: AppColors.primary,
-                                      ),
                                     ],
                                   ),
-                                ),
+                                  Icon(
+                                    Icons.calendar_today_outlined,
+                                    size: 15,
+                                    color: cs.onSurface.withValues(alpha: 0.4),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 10),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.translate('label_end_date'),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: cs.onSurface.withValues(alpha: 0.5),
-                                  letterSpacing: 0.5,
-                                ),
+                          child: InkWell(
+                            onTap: () async {
+                              final picked = await showDatePicker(
+                                context: dialogContext,
+                                initialDate: localEndDate,
+                                firstDate: DateTime(1970),
+                                lastDate: DateTime(2100),
+                              );
+                              if (picked != null) {
+                                setDialogState(() {
+                                  localEndDate = picked;
+                                });
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 11,
                               ),
-                              const SizedBox(height: 8),
-                              InkWell(
-                                onTap: () async {
-                                  final picked = await showDatePicker(
-                                    context: dialogContext,
-                                    initialDate: localEndDate,
-                                    firstDate: DateTime(1970),
-                                    lastDate: DateTime(2100),
-                                  );
-                                  if (picked != null) {
-                                    setDialogState(() {
-                                      localEndDate = picked;
-                                    });
-                                  }
-                                },
-                                borderRadius: BorderRadius.circular(16),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 14,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: isDark
-                                        ? const Color(0xFF161817)
-                                        : const Color(0xFFF3F4F6),
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: cs.onSurface.withValues(
-                                        alpha: isDark ? 0.08 : 0.06,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                              decoration: BoxDecoration(
+                                color: cardBg,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: borderColor),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        DateFormat(
-                                          'dd/MM/yyyy',
-                                        ).format(localEndDate),
+                                        'TO',
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.w600,
+                                          color: cs.onSurface.withValues(alpha: 0.4),
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        DateFormat('dd MMM yyyy').format(localEndDate),
+                                        style: TextStyle(
+                                          fontSize: 12.5,
                                           fontWeight: FontWeight.w600,
                                           color: cs.onSurface,
                                         ),
                                       ),
-                                      Icon(
-                                        Icons.calendar_today_rounded,
-                                        size: 16,
-                                        color: AppColors.primary,
-                                      ),
                                     ],
                                   ),
-                                ),
+                                  Icon(
+                                    Icons.calendar_today_outlined,
+                                    size: 15,
+                                    color: cs.onSurface.withValues(alpha: 0.4),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
-                    // Include period summary row (tappable) - Only for PDF
+                    // Include period summary toggle - Only for PDF
                     if (localExportFormat == 'pdf') ...[
                       InkWell(
                         onTap: () {
@@ -2678,21 +2697,24 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                             localIncludeSummary = !localIncludeSummary;
                           });
                         },
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(10),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          padding: const EdgeInsets.symmetric(vertical: 2.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 24,
-                                width: 24,
+                                height: 20,
+                                width: 20,
                                 child: Checkbox(
                                   value: localIncludeSummary,
-                                  activeColor: AppColors.primary,
-                                  checkColor: Colors.white,
+                                  activeColor: cs.onSurface,
+                                  checkColor: isDark ? Colors.black : Colors.white,
+                                  side: BorderSide(
+                                    color: cs.onSurface.withValues(alpha: 0.35),
+                                    width: 1.5,
+                                  ),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: BorderRadius.circular(4),
                                   ),
                                   onChanged: (val) {
                                     setDialogState(() {
@@ -2701,37 +2723,26 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                                   },
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      context.translate(
-                                        'label_include_period_summary',
-                                      ),
+                                      context.translate('label_include_period_summary'),
                                       style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.5,
+                                        fontWeight: FontWeight.w600,
                                         color: cs.onSurface,
                                       ),
                                     ),
-                                    if (localIncludeSummary)
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 4),
-                                        child: Text(
-                                          context.translate(
-                                            'desc_include_period_summary',
-                                          ),
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            height: 1.4,
-                                            color: cs.onSurface.withValues(
-                                              alpha: 0.5,
-                                            ),
-                                          ),
-                                        ),
+                                    Text(
+                                      'Display income, expense & savings cards on top',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: cs.onSurface.withValues(alpha: 0.45),
                                       ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -2739,77 +2750,78 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 20),
                     ] else
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
 
-                    // Buttons
-                    IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: () => Navigator.pop(dialogContext),
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                side: BorderSide(
-                                  color: cs.onSurface.withValues(alpha: 0.12),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
+                    // Action Buttons (Clean & Minimal)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () => Navigator.pop(dialogContext),
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 13),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Text(
-                                context.translate('cancel'),
-                                style: TextStyle(
-                                  color: cs.onSurface.withValues(alpha: 0.6),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
+                            ),
+                            child: Text(
+                              context.translate('cancel'),
+                              style: TextStyle(
+                                color: cs.onSurface.withValues(alpha: 0.6),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13.5,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(dialogContext);
-                                _playRewardedAdThenGenerateStatement(
-                                  localSelectedAccountId,
-                                  localStartDate,
-                                  localEndDate,
-                                  localIncludeSummary,
-                                  localExportFormat,
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                elevation: 3,
-                                shadowColor: AppColors.primary.withValues(
-                                  alpha: 0.3,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                              ),
-                              child: Text(
-                                context.translate('btn_generate'),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          flex: 2,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(dialogContext);
+                              _playRewardedAdThenGenerateStatement(
+                                localSelectedAccountId,
+                                localStartDate,
+                                localEndDate,
+                                localIncludeSummary,
+                                localExportFormat,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isDark ? Colors.white : const Color(0xFF1E201F),
+                              foregroundColor: isDark ? Colors.black : Colors.white,
+                              elevation: 0,
+                              shadowColor: Colors.transparent,
+                              padding: const EdgeInsets.symmetric(vertical: 13),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
                               ),
                             ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.download_rounded,
+                                  size: 17,
+                                  color: isDark ? Colors.black : Colors.white,
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  context.translate('btn_generate'),
+                                  style: TextStyle(
+                                    color: isDark ? Colors.black : Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13.5,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -2958,6 +2970,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
 
       final settingsProvider = context.read<SettingsProvider>();
       final currencySymbol = settingsProvider.currency;
+      final currencyCode = settingsProvider.currencyCode;
 
       if (format == 'csv') {
         await _generateAndShareCsvStatement(
@@ -2974,7 +2987,9 @@ class _TransactionsScreenState extends State<TransactionsScreen>
           startDate: start,
           endDate: end,
           currencySymbol: currencySymbol,
+          currencyCode: currencyCode,
           includeSummary: includeSummary,
+          isSingleAccount: accountId != null,
         );
       }
     } catch (e) {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -50,6 +51,74 @@ class FirestoreService {
         debugPrint('Safe doc cache error: $cacheErr');
         rethrow;
       }
+    }
+  }
+
+  // --- Safe Offline-First Write Helpers ---
+
+  /// Safely commits a WriteBatch with a short timeout.
+  /// In offline-first Firestore, local persistent cache is modified synchronously and queued
+  /// for server sync. If offline or on a slow network, the server ack future hangs indefinitely,
+  /// so we timeout gracefully to let the UI proceed without getting stuck on loading indicators.
+  Future<void> _safeBatchCommit(
+    WriteBatch batch, {
+    Duration timeout = const Duration(milliseconds: 800),
+  }) async {
+    try {
+      await batch.commit().timeout(timeout);
+    } on TimeoutException {
+      debugPrint('[FirestoreService] Batch write committed to local cache (server sync queued in background).');
+    } catch (e) {
+      debugPrint('[FirestoreService] Batch commit error: $e');
+      rethrow;
+    }
+  }
+
+  /// Safely sets a document with a short timeout to prevent offline hanging.
+  Future<void> _safeSet(
+    DocumentReference<Map<String, dynamic>> docRef,
+    Map<String, dynamic> data, {
+    SetOptions? options,
+    Duration timeout = const Duration(milliseconds: 800),
+  }) async {
+    try {
+      await docRef.set(data, options).timeout(timeout);
+    } on TimeoutException {
+      debugPrint('[FirestoreService] Document set committed to local cache (server sync queued in background).');
+    } catch (e) {
+      debugPrint('[FirestoreService] Document set error: $e');
+      rethrow;
+    }
+  }
+
+  /// Safely updates a document with a short timeout to prevent offline hanging.
+  Future<void> _safeUpdate(
+    DocumentReference<Map<String, dynamic>> docRef,
+    Map<String, dynamic> data, {
+    Duration timeout = const Duration(milliseconds: 800),
+  }) async {
+    try {
+      await docRef.update(data).timeout(timeout);
+    } on TimeoutException {
+      debugPrint('[FirestoreService] Document update committed to local cache (server sync queued in background).');
+    } catch (e) {
+      debugPrint('[FirestoreService] Document update error: $e');
+      rethrow;
+    }
+  }
+
+  /// Safely deletes a document with a short timeout to prevent offline hanging.
+  Future<void> _safeDelete(
+    DocumentReference<Map<String, dynamic>> docRef, {
+    Duration timeout = const Duration(milliseconds: 800),
+  }) async {
+    try {
+      await docRef.delete().timeout(timeout);
+    } on TimeoutException {
+      debugPrint('[FirestoreService] Document delete committed to local cache (server sync queued in background).');
+    } catch (e) {
+      debugPrint('[FirestoreService] Document delete error: $e');
+      rethrow;
     }
   }
 
@@ -175,9 +244,12 @@ class FirestoreService {
   Future<void> setHasSeededDummyData() async {
     final uid = _uid;
     if (uid == null) return;
-    await _db.collection('users').doc(uid).set({
-      'hasSeededDummyData': true,
-    }, SetOptions(merge: true));
+    final docRef = _db.collection('users').doc(uid);
+    await _safeSet(
+      docRef,
+      {'hasSeededDummyData': true},
+      options: SetOptions(merge: true),
+    );
   }
 
   Future<bool> hasCleanedDummyData() async {
@@ -197,9 +269,12 @@ class FirestoreService {
   Future<void> setHasCleanedDummyData() async {
     final uid = _uid;
     if (uid == null) return;
-    await _db.collection('users').doc(uid).set({
-      'hasCleanedDummyData': true,
-    }, SetOptions(merge: true));
+    final docRef = _db.collection('users').doc(uid);
+    await _safeSet(
+      docRef,
+      {'hasCleanedDummyData': true},
+      options: SetOptions(merge: true),
+    );
   }
 
   Future<void> cleanupDummyData() async {
@@ -207,11 +282,9 @@ class FirestoreService {
     if (uid == null) return;
 
     try {
-      final accountsSnap = await _db
-          .collection('users')
-          .doc(uid)
-          .collection('accounts')
-          .get();
+      final accountsSnap = await _safeGet(
+        _db.collection('users').doc(uid).collection('accounts'),
+      );
       String? dummyAccountId;
       for (var doc in accountsSnap.docs) {
         final data = doc.data();
@@ -242,11 +315,9 @@ class FirestoreService {
         hasDeletes = true;
       }
 
-      final txsSnap = await _db
-          .collection('users')
-          .doc(uid)
-          .collection('transactions')
-          .get();
+      final txsSnap = await _safeGet(
+        _db.collection('users').doc(uid).collection('transactions'),
+      );
       for (var doc in txsSnap.docs) {
         final data = doc.data();
         final accId =
@@ -266,7 +337,7 @@ class FirestoreService {
       }
 
       if (hasDeletes) {
-        await batch.commit();
+        await _safeBatchCommit(batch);
         debugPrint("Dummy data cleaned up successfully!");
       }
     } catch (e) {
@@ -407,7 +478,7 @@ class FirestoreService {
             .doc();
         batch.set(docRef, cat);
       }
-      await batch.commit();
+      await _safeBatchCommit(batch);
     } catch (e) {
       debugPrint("Error creating default categories: $e");
     }
@@ -448,7 +519,7 @@ class FirestoreService {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      await batch.commit();
+      await _safeBatchCommit(batch);
       debugPrint("Default sub-accounts created successfully!");
     } catch (e) {
       debugPrint("Error creating default sub-accounts: $e");
@@ -498,7 +569,7 @@ class FirestoreService {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      await batch.commit();
+      await _safeBatchCommit(batch);
       debugPrint("Default main accounts created successfully!");
     } catch (e) {
       debugPrint("Error creating default main accounts: $e");
@@ -529,11 +600,12 @@ class FirestoreService {
   Future<String> createAccount(Map<String, dynamic> accountData) async {
     final uid = _uid;
     if (uid == null) throw Exception("User not logged in");
-    final docRef = await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('accounts')
-        .add({...accountData, 'createdAt': FieldValue.serverTimestamp()});
+        .doc();
+    await _safeSet(docRef, {...accountData, 'createdAt': FieldValue.serverTimestamp()});
     return docRef.id;
   }
 
@@ -543,23 +615,23 @@ class FirestoreService {
   ) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('accounts')
-        .doc(id)
-        .update({...accountData, 'updatedAt': FieldValue.serverTimestamp()});
+        .doc(id);
+    await _safeUpdate(docRef, {...accountData, 'updatedAt': FieldValue.serverTimestamp()});
   }
 
   Future<void> deleteAccount(String id) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('accounts')
-        .doc(id)
-        .delete();
+        .doc(id);
+    await _safeDelete(docRef);
   }
 
   Stream<List<Map<String, dynamic>>> getMainAccounts() {
@@ -594,7 +666,8 @@ class FirestoreService {
   Future<void> createMainAccount(Map<String, dynamic> accountData) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db.collection('users').doc(uid).collection('main_accounts').add({
+    final docRef = _db.collection('users').doc(uid).collection('main_accounts').doc();
+    await _safeSet(docRef, {
       ...accountData,
       'createdAt': FieldValue.serverTimestamp(),
     });
@@ -606,23 +679,23 @@ class FirestoreService {
   ) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('main_accounts')
-        .doc(id)
-        .update({...data, 'updatedAt': FieldValue.serverTimestamp()});
+        .doc(id);
+    await _safeUpdate(docRef, {...data, 'updatedAt': FieldValue.serverTimestamp()});
   }
 
   Future<void> deleteMainAccount(String id) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('main_accounts')
-        .doc(id)
-        .delete();
+        .doc(id);
+    await _safeDelete(docRef);
   }
 
   Future<Map<String, dynamic>> getAccountSummary() async {
@@ -738,21 +811,23 @@ class FirestoreService {
   Future<void> createCategory(Map<String, dynamic> categoryData) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('categories')
-        .add(categoryData);
+        .doc();
+    await _safeSet(docRef, categoryData);
   }
 
   Future<String> createCategoryWithId(Map<String, dynamic> categoryData) async {
     final uid = _uid;
     if (uid == null) throw Exception("User not logged in");
-    final ref = await _db
+    final ref = _db
         .collection('users')
         .doc(uid)
         .collection('categories')
-        .add(categoryData);
+        .doc();
+    await _safeSet(ref, categoryData);
     return ref.id;
   }
 
@@ -783,23 +858,23 @@ class FirestoreService {
   ) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('categories')
-        .doc(id)
-        .update(categoryData);
+        .doc(id);
+    await _safeUpdate(docRef, categoryData);
   }
 
   Future<void> deleteCategory(String id) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('categories')
-        .doc(id)
-        .delete();
+        .doc(id);
+    await _safeDelete(docRef);
   }
 
   // --- Transactions ---
@@ -839,7 +914,7 @@ class FirestoreService {
     });
 
     await _updateBalances(batch, txData, isAddition: true);
-    await batch.commit();
+    await _safeBatchCommit(batch);
   }
 
   Future<void> updateTransaction(
@@ -871,7 +946,7 @@ class FirestoreService {
       'updatedAt': FieldValue.serverTimestamp(),
     });
 
-    await batch.commit();
+    await _safeBatchCommit(batch);
   }
 
   Future<void> deleteTransaction(Map<String, dynamic> txData) async {
@@ -890,7 +965,7 @@ class FirestoreService {
     // 2. Delete transaction
     batch.delete(txRef);
 
-    await batch.commit();
+    await _safeBatchCommit(batch);
   }
 
   Future<void> _updateBalances(
@@ -1153,7 +1228,8 @@ class FirestoreService {
   Future<void> createBudget(Map<String, dynamic> budgetData) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db.collection('users').doc(uid).collection('budgets').add({
+    final docRef = _db.collection('users').doc(uid).collection('budgets').doc();
+    await _safeSet(docRef, {
       ...budgetData,
       'createdAt': FieldValue.serverTimestamp(),
     });
@@ -1162,20 +1238,22 @@ class FirestoreService {
   Future<void> updateBudget(String id, Map<String, dynamic> budgetData) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db.collection('users').doc(uid).collection('budgets').doc(id).update(
-      {...budgetData, 'updatedAt': FieldValue.serverTimestamp()},
-    );
+    final docRef = _db.collection('users').doc(uid).collection('budgets').doc(id);
+    await _safeUpdate(docRef, {
+      ...budgetData,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
   }
 
   Future<void> deleteBudget(String id) async {
     final uid = _uid;
     if (uid == null) return;
-    await _db
+    final docRef = _db
         .collection('users')
         .doc(uid)
         .collection('budgets')
-        .doc(id)
-        .delete();
+        .doc(id);
+    await _safeDelete(docRef);
   }
 
   Future<void> submitFeedback(Map<String, dynamic> feedbackData) async {
@@ -1199,13 +1277,13 @@ class FirestoreService {
       batch.delete(doc.reference);
       count++;
       if (count >= 450) {
-        await batch.commit();
+        await _safeBatchCommit(batch);
         batch = _db.batch();
         count = 0;
       }
     }
     if (count > 0) {
-      await batch.commit();
+      await _safeBatchCommit(batch);
     }
 
     // 2. Reset account balances to 0
@@ -1219,13 +1297,13 @@ class FirestoreService {
       batch.update(doc.reference, {'balance': 0.0});
       count++;
       if (count >= 450) {
-        await batch.commit();
+        await _safeBatchCommit(batch);
         batch = _db.batch();
         count = 0;
       }
     }
     if (count > 0) {
-      await batch.commit();
+      await _safeBatchCommit(batch);
     }
   }
 
@@ -1253,13 +1331,13 @@ class FirestoreService {
         batch.delete(doc.reference);
         count++;
         if (count >= 450) {
-          await batch.commit();
+          await _safeBatchCommit(batch);
           batch = _db.batch();
           count = 0;
         }
       }
       if (count > 0) {
-        await batch.commit();
+        await _safeBatchCommit(batch);
       }
     }
 

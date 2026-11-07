@@ -449,4 +449,20 @@ const Map<String, String> esTranslations = {
   'settings_backup_reminder': "Recordatorios de copia de seguridad",
   'monday': "Lunes",
   'sunday': "Domingo",
+
+  // Clear Data Strings
+  'clear_data': "Borrar datos",
+  'clear_app_data_title': "Borrar datos de la aplicación",
+  'clear_app_data_subtitle': "Elige cómo deseas restablecer tus datos",
+  'clear_transactions_only_title': "Borrar solo transacciones",
+  'clear_transactions_only_desc': "Elimina el historial de ingresos, gastos y transferencias. Restablece saldos a 0. Mantiene cuentas, categorías y presupuestos.",
+  'clear_factory_reset_title': "Restablecimiento completo",
+  'clear_factory_reset_desc': "Borra permanentemente todas las transacciones, cuentas, categorías, presupuestos y notas. Restaura valores predeterminados.",
+  'clear_confirm_title': "¿Estás seguro?",
+  'clear_confirm_tx_desc': "Esto eliminará permanentemente todos los registros de transacciones y restablecerá los saldos a cero. No se puede deshacer.",
+  'clear_confirm_full_desc': "Esto borrará permanentemente todos los datos de la aplicación incluyendo transacciones, cuentas, presupuestos y notas. No se puede deshacer.",
+  'btn_yes_delete': "Sí, eliminar",
+  'msg_tx_cleared': "Todas las transacciones se borraron con éxito",
+  'msg_data_reset': "Todos los datos de la aplicación se restablecieron",
+  'msg_clear_failed': "Error al borrar los datos",
 };

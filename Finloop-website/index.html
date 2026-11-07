@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinLoop – Budget & Expense Tracker | Master Your Finances</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Take control of your money with FinLoop, the modern, secure personal finance tracker for Android. Track expenses, analyze budgets, and manage wealth effortlessly.">
+    <meta name="keywords" content="FinLoop, budget tracker, expense manager, personal finance, money tracker, savings manager, finance app, Android expense tracker">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FinLoop – Budget & Expense Tracker">
+    <meta property="og:description" content="Take control of your money with FinLoop. Track expenses, manage budgets, and analyze wealth effortlessly.">
+    <meta property="og:image" content="assets/screenshots/2_Daily_Transaction_screen.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="FinLoop – Budget & Expense Tracker">
+    <meta property="twitter:description" content="Take control of your money with FinLoop. Track expenses, manage budgets, and analyze wealth effortlessly.">
+    <meta property="twitter:image" content="assets/screenshots/2_Daily_Transaction_screen.jpg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="assets/logo.svg" alt="FinLoop Logo" class="logo-img">
+                <span class="logo-text">FinLoop</span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#screenshots" class="nav-link">Screenshots</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#download" class="btn btn-primary btn-sm mobile-only-btn">Download Now</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#download" class="btn btn-primary btn-sm nav-cta">Download App</a>
+                <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="badge-tag">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">New Version 2.0 Live on Google Play</span>
+                </div>
+                <h1 class="hero-title">Take Control of Your Money. <span class="text-gradient">Effortlessly.</span></h1>
+                <p class="hero-subtitle">
+                    FinLoop is a premium, secure, and modern personal finance assistant designed to track daily expenses, manage budgets, and analyze spending habits with zero friction.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://play.google.com/store/apps/details?id=com.finloop.finloop" class="google-play-badge-link" target="_blank" rel="noopener">
+                        <svg class="google-play-btn" viewBox="0 0 180 54" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="180" height="54" rx="8" fill="black" stroke="#222" stroke-width="1.5" />
+                          <g transform="translate(14, 10)">
+                            <path d="M 1.5,1 C 0.7,1.8 0.2,3.1 0.2,4.8 L 0.2,29.2 C 0.2,30.9 0.7,32.2 1.5,33 L 1.7,33.2 L 17.6,17.3 L 17.6,16.7 L 1.7,0.8 L 1.5,1 Z" fill="#00a3ff"/>
+                            <path d="M 23.2,22.8 L 17.6,17.3 L 17.6,16.7 L 23.2,11.2 L 23.4,11.3 L 30.1,15.1 C 32,16.2 32,17.8 30.1,18.9 L 23.4,22.7 C 23.2,22.8 23.2,22.8 23.2,22.8 Z" fill="#ffc107"/>
+                            <path d="M 1.7,0.8 L 17.6,16.7 L 23.2,11.2 L 7.3,2.1 C 4.2,0.3 1.7,0.8 1.7,0.8 Z" fill="#ff3333"/>
+                            <path d="M 1.7,33.2 L 7.3,31.9 L 23.2,22.8 L 17.6,17.3 L 1.7,33.2 Z" fill="#48c348"/>
+                          </g>
+                          <text x="56" y="20" fill="white" font-family="'Inter', sans-serif" font-size="9" font-weight="600" letter-spacing="0.3">GET IT ON</text>
+                          <text x="56" y="38" fill="white" font-family="'Outfit', 'Inter', sans-serif" font-size="16" font-weight="700">Google Play</text>
+                        </svg>
+                    </a>
+                </div>
+                <div class="hero-trust">
+                    <div class="avatars">
+                        <span class="avatar"><i class="fa-solid fa-user"></i></span>
+                        <span class="avatar"><i class="fa-solid fa-user"></i></span>
+                        <span class="avatar"><i class="fa-solid fa-user"></i></span>
+                    </div>
+                    <div class="trust-text">
+                        <strong>10,000+</strong> users tracking budgets daily. Rated <strong>4.8 ★</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <!-- Outer phone mockup frame -->
+                <div class="phone-frame hero-mockup">
+                    <div class="phone-camera"></div>
+                    <div class="phone-screen">
+                        <!-- Status Bar -->
+                        <div class="phone-status-bar">
+                            <span class="time">10:00 AM</span>
+                            <div class="icons">
+                                <i class="fa-solid fa-wifi"></i>
+                                <i class="fa-solid fa-signal"></i>
+                                <i class="fa-solid fa-battery-full"></i>
+                            </div>
+                        </div>
+
+                        <!-- App Layout inside Phone Mockup -->
+                        <div class="app-container">
+                            <div class="app-header">
+                                <div class="user-profile">
+                                    <div class="profile-pic">FL</div>
+                                    <div>
+                                        <p class="greeting">Welcome Back</p>
+                                        <p class="profile-name">Savings Account</p>
+                                    </div>
+                                </div>
+                                <div class="app-header-actions">
+                                    <i class="fa-solid fa-bell"></i>
+                                </div>
+                            </div>
+
+                            <!-- App Wallet Card -->
+                            <div class="app-balance-card">
+                                <span class="card-label">Total Balance</span>
+                                <h2 class="card-amount">$4,850.25</h2>
+                                <div class="card-flow">
+                                    <div class="flow-item">
+                                        <i class="fa-solid fa-arrow-down-long income-icon"></i>
+                                        <div>
+                                            <p class="flow-label">Income</p>
+                                            <p class="flow-val">$6,200.00</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-item">
+                                        <i class="fa-solid fa-arrow-up-long expense-icon"></i>
+                                        <div>
+                                            <p class="flow-label">Expenses</p>
+                                            <p class="flow-val">$1,349.75</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screen Contents (Swapped by Tabs) -->
+                            <div class="app-screen-body">
+                                <!-- TAB 1: Ledger -->
+                                <div class="app-tab-content active" id="mock-tab-ledger">
+                                    <div class="section-title-row">
+                                        <p class="body-title">Recent Transactions</p>
+                                        <a href="#" class="view-all">See All</a>
+                                    </div>
+                                    <div class="mock-transactions">
+                                        <div class="tx-item">
+                                            <div class="tx-icon icon-shopping"><i class="fa-solid fa-cart-shopping"></i></div>
+                                            <div class="tx-details">
+                                                <p class="tx-name">Supermarket Groceries</p>
+                                                <p class="tx-date">Today, 2:40 PM</p>
+                                            </div>
+                                            <p class="tx-amount negative">-$68.40</p>
+                                        </div>
+                                        <div class="tx-item">
+                                            <div class="tx-icon icon-salary"><i class="fa-solid fa-wallet"></i></div>
+                                            <div class="tx-details">
+                                                <p class="tx-name">Freelance Work</p>
+                                                <p class="tx-date">Yesterday, 9:00 AM</p>
+                                            </div>
+                                            <p class="tx-amount positive">+$450.00</p>
+                                        </div>
+                                        <div class="tx-item">
+                                            <div class="tx-icon icon-transport"><i class="fa-solid fa-car"></i></div>
+                                            <div class="tx-details">
+                                                <p class="tx-name">Ride Sharing App</p>
+                                                <p class="tx-date">16 July, 6:15 PM</p>
+                                            </div>
+                                            <p class="tx-amount negative">-$15.20</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- TAB 2: Analytics -->
+                                <div class="app-tab-content" id="mock-tab-analytics">
+                                    <div class="section-title-row">
+                                        <p class="body-title">Spending Breakdown</p>
+                                        <span class="chart-period">This Month</span>
+                                    </div>
+                                    <div class="mock-chart-container">
+                                        <!-- CSS Bar Chart -->
+                                        <div class="bar-chart">
+                                            <div class="bar-col">
+                                                <div class="bar-fill" style="height: 60%;" data-amount="$240"><span class="bar-tooltip">Groceries $240</span></div>
+                                                <span class="bar-label">Groc</span>
+                                            </div>
+                                            <div class="bar-col">
+                                                <div class="bar-fill" style="height: 85%;" data-amount="$340"><span class="bar-tooltip">Rent $340</span></div>
+                                                <span class="bar-label">Rent</span>
+                                            </div>
+                                            <div class="bar-col">
+                                                <div class="bar-fill" style="height: 40%;" data-amount="$160"><span class="bar-tooltip">Travel $160</span></div>
+                                                <span class="bar-label">Trav</span>
+                                            </div>
+                                            <div class="bar-col">
+                                                <div class="bar-fill" style="height: 25%;" data-amount="$100"><span class="bar-tooltip">Dining $100</span></div>
+                                                <span class="bar-label">Eat</span>
+                                            </div>
+                                            <div class="bar-col">
+                                                <div class="bar-fill" style="height: 50%;" data-amount="$200"><span class="bar-tooltip">Others $200</span></div>
+                                                <span class="bar-label">Misc</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="budget-alert-card">
+                                        <div class="alert-header">
+                                            <span class="alert-title"><i class="fa-solid fa-triangle-exclamation"></i> Food Budget Warning</span>
+                                            <span class="alert-perc">85% Used</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill warning" style="width: 85%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- TAB 3: Security & Backup -->
+                                <div class="app-tab-content" id="mock-tab-backup">
+                                    <p class="body-title">Privacy & Security</p>
+                                    <div class="settings-list">
+                                        <div class="setting-item">
+                                            <div class="setting-icon"><i class="fa-solid fa-fingerprint"></i></div>
+                                            <div class="setting-text">
+                                                <p class="setting-name">Biometric Unlock</p>
+                                                <p class="setting-desc">Use FaceID / Fingerprint</p>
+                                            </div>
+                                            <div class="setting-toggle active"></div>
+                                        </div>
+                                        <div class="setting-item">
+                                            <div class="setting-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                            <div class="setting-text">
+                                                <p class="setting-name">Cloud Backup</p>
+                                                <p class="setting-desc">Firebase Firestore Sync</p>
+                                            </div>
+                                            <div class="setting-toggle active"></div>
+                                        </div>
+                                        <div class="setting-item">
+                                            <div class="setting-icon"><i class="fa-solid fa-file-excel"></i></div>
+                                            <div class="setting-text">
+                                                <p class="setting-name">Auto Excel Exports</p>
+                                                <p class="setting-desc">Weekly summaries in sheet</p>
+                                            </div>
+                                            <div class="setting-toggle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone App Navigation bar -->
+                            <div class="phone-navbar">
+                                <button class="phone-nav-btn active" data-target="mock-tab-ledger">
+                                    <i class="fa-solid fa-list-ul"></i>
+                                    <span>Ledger</span>
+                                </button>
+                                <button class="phone-nav-btn" data-target="mock-tab-analytics">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                    <span>Analytics</span>
+                                </button>
+                                <button class="phone-nav-btn" data-target="mock-tab-backup">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span>Security</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container stats-grid">
+            <div class="stat-card scroll-reveal">
+                <h3 class="stat-number">10K+</h3>
+                <p class="stat-label">Google Play Downloads</p>
+            </div>
+            <div class="stat-card scroll-reveal">
+                <h3 class="stat-number">4.8★</h3>
+                <p class="stat-label">User Rating on Play Store</p>
+            </div>
+            <div class="stat-card scroll-reveal">
+                <h3 class="stat-number">$5M+</h3>
+                <p class="stat-label">Financial Assets Tracked</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Smart Features to Master Wealth</h2>
+                <p class="section-subtitle">Take control of your spending habits with tools designed for speed, detailed clarity, and ultimate data privacy.</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon bg-blue">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h3 class="feature-title">Timeline Ledgers</h3>
+                    <p class="feature-desc">View financial records organized by Daily, Weekly, Monthly, and Calendar tabs. Perfect for tracking trends quickly.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon bg-sky">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+                    <h3 class="feature-title">Dynamic Insights</h3>
+                    <p class="feature-desc">Monitor spending breakdowns with interactive visual charts and track custom thresholds with budget warnings.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon bg-blue">
+                        <i class="fa-solid fa-fingerprint"></i>
+                    </div>
+                    <h3 class="feature-title">Biometric Security</h3>
+                    <p class="feature-desc">Protect your entries with a 4-digit security PIN, auto-lock timeouts, and hardware FaceID or Fingerprint authentication.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon bg-sky">
+                        <i class="fa-solid fa-users-viewfinder"></i>
+                    </div>
+                    <h3 class="feature-title">Group Split Management</h3>
+                    <p class="feature-desc">Form expense-sharing groups with friends or housemates. Track balances, ledger entries, and settle debts instantly.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon bg-blue">
+                        <i class="fa-solid fa-file-csv"></i>
+                    </div>
+                    <h3 class="feature-title">Data Import & Export</h3>
+                    <p class="feature-desc">Export transaction summaries to structured Excel (.xlsx) spreadsheets or print detailed PDF financial ledgers.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon bg-sky">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Local Reminders</h3>
+                    <p class="feature-desc">Setup daily push notifications at your custom hour to log transactions and never miss a cup of coffee entry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Screenshots Showcase Section -->
+    <section class="screenshots-section" id="screenshots">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Explore the App Interface</h2>
+                <p class="section-subtitle">A clean, dark/light adaptive interface designed for speed, clarity, and intuitive money management.</p>
+            </div>
+
+            <div class="showcase-container">
+                <!-- Navigation Tabs for screens -->
+                <div class="showcase-tabs">
+                    <button class="showcase-tab active" data-img="assets/screenshots/2_Daily_Transaction_screen.jpg" data-desc="Check running summaries of your income, expenses, and net balance across daily, weekly, or monthly logs with quick-search features.">
+                        <i class="fa-solid fa-list"></i>
+                        <span>Transaction Ledger</span>
+                    </button>
+                    <button class="showcase-tab" data-img="assets/screenshots/1_Manage_Account_Screen.jpg" data-desc="Manage cash wallets, savings accounts, bank deposits, and credit cards in separate tabs with individual balance sheets.">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Account Management</span>
+                    </button>
+                    <button class="showcase-tab" data-img="assets/screenshots/3_Analytics_Screen.jpg" data-desc="Understand where your money flows with category distributions, interactive charts, and custom budget alert configurations.">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Interactive Charts</span>
+                    </button>
+                    <button class="showcase-tab" data-img="assets/screenshots/4_Credit_Card_Detailed_Screen.jpg" data-desc="Track credit card limits, total credit utilization, card statements, and log card-specific transactions with ease.">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>Credit Card Ledgers</span>
+                    </button>
+                    <button class="showcase-tab" data-img="assets/screenshots/6_Backup_Screen.jpg" data-desc="Securely upload manual database backups to the cloud or sync local records using Google Firebase integration.">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Backups & Cloud Sync</span>
+                    </button>
+                </div>
+
+                <!-- Showcase Phone Frame display -->
+                <div class="showcase-display scroll-reveal">
+                    <div class="phone-frame showcase-mockup">
+                        <div class="phone-camera"></div>
+                        <div class="phone-screen">
+                            <img src="assets/screenshots/2_Daily_Transaction_screen.jpg" alt="FinLoop Screenshot" id="active-screenshot-img" class="screenshot-img">
+                        </div>
+                    </div>
+                    <div class="screenshot-info-card">
+                        <p class="info-desc" id="screenshot-info-desc">Check running summaries of your income, expenses, and net balance across daily, weekly, or monthly logs with quick-search features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Got questions about FinLoop? Find quick answers regarding data security, exports, and platform compatibility.</p>
+            </div>
+
+            <div class="faq-container">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item scroll-reveal">
+                    <button class="faq-question">
+                        <span>Is FinLoop free to use?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! FinLoop offers all core features like daily transaction logging, accounts creation, and basic charts for free. To keep development sustainable, we serve non-intrusive ads. Advanced filters, backups, and exports can be unlocked completely for free by watching short rewarded ads.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item scroll-reveal">
+                    <button class="faq-question">
+                        <span>Where is my financial data stored?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>By default, FinLoop stores all transaction ledgers locally on your device storage. This ensures 100% data privacy and offline capability. You can choose to enable secure cloud backups or sync notes, which utilizes Google Firebase Firestore cloud storage.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item scroll-reveal">
+                    <button class="faq-question">
+                        <span>How secure is FinLoop?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>FinLoop provides robust security tools. You can configure a 4-digit PIN lock and enable biometric login (Fingerprint / Face ID). The app also integrates a background timeout monitor that automatically locks the app when you minimize it for longer than your configured cooldown period.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item scroll-reveal">
+                    <button class="faq-question">
+                        <span>Can I export data to Excel or PDF?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, FinLoop has powerful data exporting features. You can generate clean, formatted Excel (.xlsx) workbooks filtering by date and accounts, or compile your ledger list into a neat PDF document for printing or emailing.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item scroll-reveal">
+                    <button class="faq-question">
+                        <span>Does FinLoop sell or share my data?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely not. We do not sell, rent, or share your personal ledger transactions. All financial assets and accounts details remain completely confidential and are stored locally or synced securely under your exclusive account.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section class="download-cta" id="download">
+        <div class="container download-container">
+            <div class="download-content text-center scroll-reveal">
+                <h2 class="cta-title">Ready to Take Control of Your Expenses?</h2>
+                <p class="cta-subtitle">Get the FinLoop app on your Android device today and start budgeting smarter.</p>
+                <div class="cta-actions">
+                    <a href="https://play.google.com/store/apps/details?id=com.finloop.finloop" class="google-play-badge-link" target="_blank" rel="noopener">
+                        <svg class="google-play-btn white-btn" viewBox="0 0 180 54" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="180" height="54" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.5" />
+                          <g transform="translate(14, 10)">
+                            <path d="M 1.5,1 C 0.7,1.8 0.2,3.1 0.2,4.8 L 0.2,29.2 C 0.2,30.9 0.7,32.2 1.5,33 L 1.7,33.2 L 17.6,17.3 L 17.6,16.7 L 1.7,0.8 L 1.5,1 Z" fill="#00a3ff"/>
+                            <path d="M 23.2,22.8 L 17.6,17.3 L 17.6,16.7 L 23.2,11.2 L 23.4,11.3 L 30.1,15.1 C 32,16.2 32,17.8 30.1,18.9 L 23.4,22.7 C 23.2,22.8 23.2,22.8 23.2,22.8 Z" fill="#ffc107"/>
+                            <path d="M 1.7,0.8 L 17.6,16.7 L 23.2,11.2 L 7.3,2.1 C 4.2,0.3 1.7,0.8 1.7,0.8 Z" fill="#ff3333"/>
+                            <path d="M 1.7,33.2 L 7.3,31.9 L 23.2,22.8 L 17.6,17.3 L 1.7,33.2 Z" fill="#48c348"/>
+                          </g>
+                          <text x="56" y="20" fill="#475569" font-family="'Inter', sans-serif" font-size="9" font-weight="600" letter-spacing="0.3">GET IT ON</text>
+                          <text x="56" y="38" fill="#0f172a" font-family="'Outfit', 'Inter', sans-serif" font-size="16" font-weight="700">Google Play</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="assets/logo.svg" alt="FinLoop Logo" class="logo-img">
+                        <span class="logo-text">FinLoop</span>
+                    </a>
+                    <p class="footer-desc">
+                        A modern and secure financial companion for Android devices. Track expenses, analyze categories, sync backups, and run group expense ledgers.
+                    </p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Github"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="mailto:support.finloop@gmail.com" aria-label="Support Email"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h4 class="footer-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#screenshots">Screenshots</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4 class="footer-title">Legal & Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="mailto:support.finloop@gmail.com">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 FinLoop. Developed by Deepak Lakhwani. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

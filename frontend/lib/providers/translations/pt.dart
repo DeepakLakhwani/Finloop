@@ -449,4 +449,20 @@ const Map<String, String> ptTranslations = {
   'settings_backup_reminder': "Lembretes de backup",
   'monday': "Segunda-feira",
   'sunday': "Domingo",
+
+  // Clear Data Strings
+  'clear_data': "Limpar dados",
+  'clear_app_data_title': "Limpar dados do aplicativo",
+  'clear_app_data_subtitle': "Escolha como deseja redefinir seus dados",
+  'clear_transactions_only_title': "Limpar apenas transações",
+  'clear_transactions_only_desc': "Exclui todo o histórico de receitas, despesas e transferências. Redefine saldos para 0. Mantém contas e orçamentos.",
+  'clear_factory_reset_title': "Restauração de fábrica completa",
+  'clear_factory_reset_desc': "Apaga permanentemente todas as transações, contas, categorias, orçamentos e notas. Restaura padrões.",
+  'clear_confirm_title': "Tem certeza?",
+  'clear_confirm_tx_desc': "Isso excluirá permanentemente todos os registros de transações e zerará os saldos. Não pode ser desfeito.",
+  'clear_confirm_full_desc': "Isso apagará permanentemente todos os dados do aplicativo. Esta ação não pode ser desfeita.",
+  'btn_yes_delete': "Sim, excluir",
+  'msg_tx_cleared': "Todas as transações foram limpas com sucesso",
+  'msg_data_reset': "Todos os dados do aplicativo foram redefinidos",
+  'msg_clear_failed': "Falha ao limpar dados",
 };

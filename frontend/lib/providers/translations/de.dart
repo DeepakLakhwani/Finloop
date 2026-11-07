@@ -449,4 +449,20 @@ const Map<String, String> deTranslations = {
   'settings_backup_reminder': "Backup-Erinnerungen",
   'monday': "Montag",
   'sunday': "Sonntag",
+
+  // Clear Data Strings
+  'clear_data': "Daten löschen",
+  'clear_app_data_title': "App-Daten löschen",
+  'clear_app_data_subtitle': "Wählen Sie, wie Sie Ihre Daten zurücksetzen möchten",
+  'clear_transactions_only_title': "Nur Transaktionen löschen",
+  'clear_transactions_only_desc': "Löscht den gesamten Verlauf von Einnahmen, Ausgaben und Überweisungen. Setzt Guthaben auf 0 zurück. Behält Konten und Budgets.",
+  'clear_factory_reset_title': "Vollständiger Werksreset",
+  'clear_factory_reset_desc': "Löscht dauerhaft alle Transaktionen, Konten, Kategorien, Budgets und Notizen. Stellt Standardeinstellungen wieder her.",
+  'clear_confirm_title': "Sind Sie sicher?",
+  'clear_confirm_tx_desc': "Dies löscht dauerhaft alle Transaktionsdatensätze und setzt die Kontostände auf Null. Kann nicht rückgängig gemacht werden.",
+  'clear_confirm_full_desc': "Dies löscht dauerhaft alle App-Daten. Dies kann nicht rückgängig gemacht werden.",
+  'btn_yes_delete': "Ja, löschen",
+  'msg_tx_cleared': "Alle Transaktionen erfolgreich gelöscht",
+  'msg_data_reset': "Alle App-Daten erfolgreich zurückgesetzt",
+  'msg_clear_failed': "Fehler beim Löschen der Daten",
 };

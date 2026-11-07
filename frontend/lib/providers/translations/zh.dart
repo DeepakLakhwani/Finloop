@@ -454,4 +454,20 @@ const Map<String, String> zhTranslations = {
   'settings_backup_reminder': "备份提醒",
   'monday': "星期一",
   'sunday': "星期日",
+
+  // Clear Data Strings
+  'clear_data': "清除数据",
+  'clear_app_data_title': "清除应用数据",
+  'clear_app_data_subtitle': "选择重置数据的方式",
+  'clear_transactions_only_title': "仅清除交易记录",
+  'clear_transactions_only_desc': "删除所有收入、支出和转账记录，余额归零。保留您的账户、分类和预算。",
+  'clear_factory_reset_title': "完全恢复出厂设置",
+  'clear_factory_reset_desc': "永久删除所有交易、账户、分类、预算和便签，恢复标准默认设置。",
+  'clear_confirm_title': "您确定吗？",
+  'clear_confirm_tx_desc': "这将永久删除所有交易记录并将账户余额重置为零。此操作无法撤销。",
+  'clear_confirm_full_desc': "这将永久清除所有应用数据。此操作无法撤销。",
+  'btn_yes_delete': "确认删除",
+  'msg_tx_cleared': "所有交易记录已成功清除",
+  'msg_data_reset': "所有应用数据已成功重置",
+  'msg_clear_failed': "清除数据失败",
 };

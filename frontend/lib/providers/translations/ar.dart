@@ -454,4 +454,20 @@ const Map<String, String> arTranslations = {
   'settings_backup_reminder': "تذكيرات النسخ الاحتياطي",
   'monday': "الاثنين",
   'sunday': "الأحد",
+
+  // Clear Data Strings
+  'clear_data': "مسح البيانات",
+  'clear_app_data_title': "مسح بيانات التطبيق",
+  'clear_app_data_subtitle': "اختر طريقة إعادة ضبط بياناتك",
+  'clear_transactions_only_title': "مسح المعاملات فقط",
+  'clear_transactions_only_desc': "يحذف سجل المعاملات بالكامل ويعيد ضبط الأرصدة إلى 0. يحتفظ بالحسابات والفئات والميزانيات.",
+  'clear_factory_reset_title': "إعادة ضبط المصنع الكاملة",
+  'clear_factory_reset_desc': "يمسح نهائياً جميع المعاملات والحسابات والفئات والميزانيات والملاحظات. يعيد الإعدادات الافتراضية.",
+  'clear_confirm_title': "هل أنت متأكد؟",
+  'clear_confirm_tx_desc': "سيؤدي هذا إلى حذف جميع سجلات المعاملات نهائياً وتصفير الأرصدة. لا يمكن التراجع عن هذا الإجراء.",
+  'clear_confirm_full_desc': "سيؤدي هذا إلى مسح جميع بيانات التطبيق نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+  'btn_yes_delete': "نعم، احذف",
+  'msg_tx_cleared': "تم مسح جميع المعاملات بنجاح",
+  'msg_data_reset': "تمت إعادة ضبط جميع بيانات التطبيق بنجاح",
+  'msg_clear_failed': "فشل مسح البيانات",
 };

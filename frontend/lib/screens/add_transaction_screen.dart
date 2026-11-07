@@ -290,6 +290,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   }
 
   Future<void> _submitAndClose() async {
+    if (_isSubmitting) return;
     final success = await _saveTransaction();
     if (success && mounted) {
       Navigator.pop(context, true);

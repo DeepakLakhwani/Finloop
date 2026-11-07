@@ -72,6 +72,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+
     // Watch providers so the settings screen rebuilds when they change
     context.watch<SettingsProvider>();
     context.watch<ThemeProvider>();
@@ -153,9 +156,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   status: 'Google Drive',
                 ),
                 SettingsTile(
-                  title: 'Clear Data',
-                  icon: Icons.delete_forever_outlined,
-                  iconColor: Colors.redAccent,
+                  title: context.translate('clear_data'),
+                  icon: Icons.delete_outline_rounded,
+                  iconColor: cs.error,
                   onTap: () => _showClearDataModal(context),
                 ),
               ]),
@@ -366,7 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             final isDark = theme.brightness == Brightness.dark;
 
             return Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
               decoration: BoxDecoration(
                 color: cs.surface,
                 borderRadius: const BorderRadius.vertical(
@@ -378,19 +381,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Handle bar
+                    Center(
+                      child: Container(
+                        width: 36,
+                        height: 4,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                          color: cs.onSurface.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+
                     // Header
                     Row(
                       children: [
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.redAccent.withValues(alpha: 0.1),
-                            shape: BoxShape.circle,
+                            color: cs.error.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(
-                            Icons.delete_forever_outlined,
-                            color: Colors.redAccent,
-                            size: 24,
+                          child: Icon(
+                            Icons.delete_outline_rounded,
+                            color: cs.error,
+                            size: 22,
                           ),
                         ),
                         const SizedBox(width: 14),
@@ -399,19 +415,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Clear App Data',
+                                context.translate('clear_app_data_title'),
                                 style: TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w600,
                                   color: cs.onSurface,
                                 ),
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Choose how you want to reset your data',
+                                context.translate('clear_app_data_subtitle'),
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  color: cs.onSurface.withValues(alpha: 0.5),
+                                  fontSize: 13,
+                                  color: cs.onSurface.withValues(alpha: 0.55),
                                 ),
                               ),
                             ],
@@ -430,60 +446,82 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 selectedMode = 'tx_only';
                               });
                             },
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(14),
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: selectedMode == 'tx_only'
-                              ? AppColors.primary.withValues(alpha: 0.08)
-                              : isDark
-                                  ? const Color(0xFF1E201F)
-                                  : const Color(0xFFF3F4F6),
-                          borderRadius: BorderRadius.circular(16),
+                              ? (isDark
+                                  ? const Color(0xFF222428)
+                                  : const Color(0xFFF1F3F5))
+                              : (isDark
+                                  ? const Color(0xFF181A1D)
+                                  : const Color(0xFFF8F9FA)),
+                          borderRadius: BorderRadius.circular(14),
                           border: Border.all(
                             color: selectedMode == 'tx_only'
-                                ? AppColors.primary
+                                ? cs.onSurface.withValues(alpha: 0.25)
                                 : cs.onSurface.withValues(alpha: 0.08),
-                            width: selectedMode == 'tx_only' ? 1.5 : 1.0,
+                            width: 1.0,
                           ),
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Radio<String>(
-                              value: 'tx_only',
-                              groupValue: selectedMode,
-                              activeColor: AppColors.primary,
-                              onChanged: isClearing
-                                  ? null
-                                  : (val) {
-                                      if (val != null) {
-                                        setModalState(() {
-                                          selectedMode = val;
-                                        });
-                                      }
-                                    },
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Container(
+                                width: 18,
+                                height: 18,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: selectedMode == 'tx_only'
+                                        ? cs.primary
+                                        : cs.onSurface.withValues(alpha: 0.3),
+                                    width: selectedMode == 'tx_only' ? 2 : 1.5,
+                                  ),
+                                ),
+                                child: selectedMode == 'tx_only'
+                                    ? Center(
+                                        child: Container(
+                                          width: 8,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: cs.primary,
+                                          ),
+                                        ),
+                                      )
+                                    : null,
+                              ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Clear Transactions Only',
+                                    context.translate(
+                                      'clear_transactions_only_title',
+                                    ),
                                     style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.5,
+                                      fontWeight: FontWeight.w600,
                                       color: cs.onSurface,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Deletes all income, expense & transfer history. Resets account balances to 0. Keeps your custom accounts, categories & budgets.',
+                                    context.translate(
+                                      'clear_transactions_only_desc',
+                                    ),
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 12.5,
                                       height: 1.4,
-                                      color: cs.onSurface.withValues(alpha: 0.6),
+                                      color: cs.onSurface.withValues(
+                                        alpha: 0.55,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -504,60 +542,80 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 selectedMode = 'full';
                               });
                             },
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(14),
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: selectedMode == 'full'
-                              ? Colors.redAccent.withValues(alpha: 0.08)
-                              : isDark
-                                  ? const Color(0xFF1E201F)
-                                  : const Color(0xFFF3F4F6),
-                          borderRadius: BorderRadius.circular(16),
+                              ? cs.error.withValues(alpha: 0.05)
+                              : (isDark
+                                  ? const Color(0xFF181A1D)
+                                  : const Color(0xFFF8F9FA)),
+                          borderRadius: BorderRadius.circular(14),
                           border: Border.all(
                             color: selectedMode == 'full'
-                                ? Colors.redAccent
+                                ? cs.error.withValues(alpha: 0.35)
                                 : cs.onSurface.withValues(alpha: 0.08),
-                            width: selectedMode == 'full' ? 1.5 : 1.0,
+                            width: 1.0,
                           ),
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Radio<String>(
-                              value: 'full',
-                              groupValue: selectedMode,
-                              activeColor: Colors.redAccent,
-                              onChanged: isClearing
-                                  ? null
-                                  : (val) {
-                                      if (val != null) {
-                                        setModalState(() {
-                                          selectedMode = val;
-                                        });
-                                      }
-                                    },
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Container(
+                                width: 18,
+                                height: 18,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: selectedMode == 'full'
+                                        ? cs.error
+                                        : cs.onSurface.withValues(alpha: 0.3),
+                                    width: selectedMode == 'full' ? 2 : 1.5,
+                                  ),
+                                ),
+                                child: selectedMode == 'full'
+                                    ? Center(
+                                        child: Container(
+                                          width: 8,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: cs.error,
+                                          ),
+                                        ),
+                                      )
+                                    : null,
+                              ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Full Factory Reset (Delete Everything)',
+                                    context.translate(
+                                      'clear_factory_reset_title',
+                                    ),
                                     style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.redAccent,
+                                      fontSize: 14.5,
+                                      fontWeight: FontWeight.w600,
+                                      color: cs.error,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Permanently erases all transactions, accounts, categories, budgets, and notes. Re-seeds fresh default settings.',
+                                    context.translate(
+                                      'clear_factory_reset_desc',
+                                    ),
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 12.5,
                                       height: 1.4,
-                                      color: cs.onSurface.withValues(alpha: 0.6),
+                                      color: cs.onSurface.withValues(
+                                        alpha: 0.55,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -581,20 +639,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   : () => Navigator.pop(bottomSheetContext),
                               style: OutlinedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
+                                  vertical: 14,
                                 ),
                                 side: BorderSide(
                                   color: cs.onSurface.withValues(alpha: 0.12),
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                               child: Text(
-                                'Cancel',
+                                context.translate('cancel'),
                                 style: TextStyle(
-                                  color: cs.onSurface.withValues(alpha: 0.6),
-                                  fontWeight: FontWeight.w600,
+                                  color: cs.onSurface.withValues(alpha: 0.7),
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                 ),
                               ),
@@ -613,21 +671,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             backgroundColor: cs.surface,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(18),
                                             ),
                                             title: Row(
                                               children: [
-                                                const Icon(
+                                                Icon(
                                                   Icons.warning_amber_rounded,
-                                                  color: Colors.redAccent,
-                                                  size: 24,
+                                                  color: cs.error,
+                                                  size: 22,
                                                 ),
                                                 const SizedBox(width: 10),
                                                 Text(
-                                                  'Are you sure?',
+                                                  context.translate(
+                                                    'clear_confirm_title',
+                                                  ),
                                                   style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w600,
                                                     color: cs.onSurface,
                                                   ),
                                                 ),
@@ -635,13 +695,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             ),
                                             content: Text(
                                               selectedMode == 'tx_only'
-                                                  ? 'This will permanently delete all transaction records and reset account balances to zero. This action cannot be undone.'
-                                                  : 'This will permanently erase ALL app data including transactions, accounts, budgets, categories, and notes. This action cannot be undone.',
+                                                  ? context.translate(
+                                                      'clear_confirm_tx_desc',
+                                                    )
+                                                  : context.translate(
+                                                      'clear_confirm_full_desc',
+                                                    ),
                                               style: TextStyle(
                                                 fontSize: 13.5,
                                                 height: 1.45,
                                                 color: cs.onSurface.withValues(
-                                                  alpha: 0.75,
+                                                  alpha: 0.7,
                                                 ),
                                               ),
                                             ),
@@ -666,13 +730,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           alertDialogContext,
                                                           false,
                                                         ),
-                                                        style:
-                                                            OutlinedButton
-                                                                .styleFrom(
+                                                        style: OutlinedButton
+                                                            .styleFrom(
                                                           padding:
                                                               const EdgeInsets
                                                                   .symmetric(
-                                                            vertical: 14,
+                                                            vertical: 12,
                                                           ),
                                                           side: BorderSide(
                                                             color: cs.onSurface
@@ -685,20 +748,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                              12,
+                                                              10,
                                                             ),
                                                           ),
                                                         ),
                                                         child: Text(
-                                                          'Cancel',
+                                                          context.translate(
+                                                            'cancel',
+                                                          ),
                                                           style: TextStyle(
                                                             color: cs.onSurface
                                                                 .withValues(
-                                                              alpha: 0.6,
+                                                              alpha: 0.7,
                                                             ),
                                                             fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14,
+                                                                FontWeight.w500,
+                                                            fontSize: 13.5,
                                                           ),
                                                         ),
                                                       ),
@@ -711,38 +776,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           alertDialogContext,
                                                           true,
                                                         ),
-                                                        style:
-                                                            ElevatedButton
-                                                                .styleFrom(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
                                                           backgroundColor:
-                                                              Colors.redAccent,
-                                                          elevation: 2,
-                                                          shadowColor:
-                                                              Colors.redAccent
-                                                                  .withValues(
-                                                            alpha: 0.3,
-                                                          ),
+                                                              cs.error,
+                                                          elevation: 0,
                                                           padding:
                                                               const EdgeInsets
                                                                   .symmetric(
-                                                            vertical: 14,
+                                                            vertical: 12,
                                                           ),
                                                           shape:
                                                               RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                              12,
+                                                              10,
                                                             ),
                                                           ),
                                                         ),
-                                                        child: const Text(
-                                                          'Yes, Delete',
-                                                          style: TextStyle(
+                                                        child: Text(
+                                                          context.translate(
+                                                            'btn_yes_delete',
+                                                          ),
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 14,
+                                                                FontWeight.w600,
+                                                            fontSize: 13.5,
                                                           ),
                                                         ),
                                                       ),
@@ -756,6 +818,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       );
 
                                       if (confirmed != true) return;
+                                      if (!context.mounted) return;
 
                                       setModalState(() {
                                         isClearing = true;
@@ -779,10 +842,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             SnackBar(
                                               content: Text(
                                                 selectedMode == 'tx_only'
-                                                    ? 'All transactions cleared successfully'
-                                                    : 'All app data reset successfully',
+                                                    ? context.translate(
+                                                        'msg_tx_cleared',
+                                                      )
+                                                    : context.translate(
+                                                        'msg_data_reset',
+                                                      ),
                                               ),
-                                              backgroundColor: AppColors.primary,
                                             ),
                                           );
                                         }
@@ -796,31 +862,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Failed to clear data: $e',
+                                                '${context.translate('msg_clear_failed')}: $e',
                                               ),
-                                              backgroundColor: Colors.redAccent,
+                                              backgroundColor: cs.error,
                                             ),
                                           );
                                         }
                                       }
                                     },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.redAccent,
-                                elevation: 2,
-                                shadowColor: Colors.redAccent.withValues(
-                                  alpha: 0.3,
-                                ),
+                                backgroundColor: cs.error,
+                                elevation: 0,
                                 padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
+                                  vertical: 14,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                               child: isClearing
                                   ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
+                                      height: 18,
+                                      width: 18,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                         valueColor:
@@ -829,11 +892,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         ),
                                       ),
                                     )
-                                  : const Text(
-                                      'Clear Data',
-                                      style: TextStyle(
+                                  : Text(
+                                      context.translate('clear_data'),
+                                      style: const TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w600,
                                         fontSize: 14,
                                       ),
                                     ),

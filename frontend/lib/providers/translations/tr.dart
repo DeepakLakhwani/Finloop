@@ -454,4 +454,20 @@ const Map<String, String> trTranslations = {
   'settings_backup_reminder': "Yedekleme hatırlatıcıları",
   'monday': "Pazartesi",
   'sunday': "Pazar",
+
+  // Clear Data Strings
+  'clear_data': "Verileri Temizle",
+  'clear_app_data_title': "Uygulama Verilerini Temizle",
+  'clear_app_data_subtitle': "Verilerinizi nasıl sıfırlamak istediğinizi seçin",
+  'clear_transactions_only_title': "Yalnızca İşlemleri Temizle",
+  'clear_transactions_only_desc': "Tüm gelir, gider ve transfer geçmişini siler. Bakiyeleri 0'a sıfırlar. Hesapları ve bütçeleri korur.",
+  'clear_factory_reset_title': "Tam Fabrika Ayarlarına Sıfırlama",
+  'clear_factory_reset_desc': "Tüm işlemleri, hesapları, kategorileri, bütçeleri ve notları kalıcı olarak siler. Varsayılanlara döner.",
+  'clear_confirm_title': "Emin misiniz?",
+  'clear_confirm_tx_desc': "Bu işlem tüm kayıtları kalıcı olarak silecek ve bakiyeleri sıfırlayacaktır. Geri alınamaz.",
+  'clear_confirm_full_desc': "Bu işlem TÜM uygulama verilerini kalıcı olarak silecektir. Geri alınamaz.",
+  'btn_yes_delete': "Evet, Sil",
+  'msg_tx_cleared': "Tüm işlemler başarıyla temizlendi",
+  'msg_data_reset': "Tüm uygulama verileri başarıyla sıfırlandı",
+  'msg_clear_failed': "Veriler temizlenemedi",
 };

@@ -454,4 +454,20 @@ const Map<String, String> thTranslations = {
   'settings_backup_reminder': "การเตือนสำรองข้อมูล",
   'monday': "วันจันทร์",
   'sunday': "วันอาทิตย์",
+
+  // Clear Data Strings
+  'clear_data': "ล้างข้อมูล",
+  'clear_app_data_title': "ล้างข้อมูลแอป",
+  'clear_app_data_subtitle': "เลือกวิธีที่คุณต้องการรีเซ็ตข้อมูล",
+  'clear_transactions_only_title': "ล้างเฉพาะประวัติธุรกรรม",
+  'clear_transactions_only_desc': "ลบประวัติรายรับ รายจ่าย และการโอนทั้งหมด รีเซ็ตยอดคงเหลือเป็น 0 บัญชีและงบประมาณจะยังคงอยู่",
+  'clear_factory_reset_title': "รีเซ็ตเป็นค่าเริ่มต้นจากโรงงาน",
+  'clear_factory_reset_desc': "ลบธุรกรรม บัญชี หมวดหมู่ งบประมาณ และบันทึกทั้งหมดอย่างถาวร และคืนค่าเริ่มต้น",
+  'clear_confirm_title': "คุณแน่ใจหรือไม่?",
+  'clear_confirm_tx_desc': "การดำเนินการนี้จะลบรายการธุรกรรมทั้งหมดอย่างถาวรและรีเซ็ตยอดคงเหลือเป็นศูนย์ ไม่สามารถยกเลิกได้",
+  'clear_confirm_full_desc': "การดำเนินการนี้จะลบข้อมูลแอปทั้งหมดอย่างถาวร ไม่สามารถยกเลิกได้",
+  'btn_yes_delete': "ใช่ ลบข้อมูล",
+  'msg_tx_cleared': "ล้างข้อมูลธุรกรรมทั้งหมดสำเร็จแล้ว",
+  'msg_data_reset': "รีเซ็ตข้อมูลแอปทั้งหมดสำเร็จแล้ว",
+  'msg_clear_failed': "การล้างข้อมูลล้มเหลว",
 };
